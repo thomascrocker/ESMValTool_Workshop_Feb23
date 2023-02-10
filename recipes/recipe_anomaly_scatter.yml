@@ -9,8 +9,7 @@ documentation:
     - sellar_alistair # (Actually Tom Crocker)
 
 datasets:
-  - {dataset: BCC-ESM1, project: CMIP6, mip: Amon, exp: [historical, rcp85], 
-     ensemble: r1i1p1f1, grid: gn}
+  - {dataset: BCC-CSM2-MR, project: CMIP6, ensemble: r1i1p1f1, grid: gn}
 
 
 preprocessors:
@@ -40,6 +39,9 @@ diagnostics:
     variables:
       tas:
         short_name: tas
+        activity: [CMIP, ScenarioMIP]
+        mip: Amon
+        exp: [historical, ssp585]
         preprocessor: tas_anomalies
         start_year: 1991
         end_year: 2100
