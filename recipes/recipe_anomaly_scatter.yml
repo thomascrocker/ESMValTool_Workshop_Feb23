@@ -6,13 +6,41 @@ documentation:
   title: Temperature and preipitation scatter plots
 
   authors:
-    - Tom Crocker
+    - sellar_alistair # (Actually Tom Crocker)
 
 datasets:
   - {dataset: BCC-ESM1, project: CMIP6, mip: Amon, exp: [historical, rcp85], 
-     ensemble: r1i1p1f1, grid: gn, start_year: 1850, end_year: 2014}
+     ensemble: r1i1p1f1, grid: gn}
+
+
+preprocessors:
+  tas_anomalies:
+    extract_region:
+      start_longitude: 100
+      end_longitude: 120
+      start_latitude: 5
+      end_latitude: 25
+    area_statistics:
+      operator: mean
+      
+    anomalies:
+        period: season
+        reference:
+          start_year: 1991
+          start_month: 1
+          start_day: 1
+          end_year: 2010
+          end_month: 12
+          end_day: 31
+        standardize: false
 
 
 diagnostics:
-  dummy_diagnostic_1:
+  anomalies:
+    variables:
+      tas:
+        short_name: tas
+        preprocessor: tas_anomalies
+        start_year: 1991
+        end_year: 2100
     scripts: null
