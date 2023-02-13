@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 # for pandas
 import pandas as pd
+import seaborn as sns
 
 # import internal esmvaltool modules here
 from esmvaltool.diag_scripts.shared import group_metadata, run_diagnostic
@@ -22,15 +23,34 @@ def _plot_scatter(cfg, data_df):
     local_path = cfg['plot_dir']
 
     # do some plotting
-    ax1 = data_df.plot.scatter(x='pr', y='tas')
+    fig, ax1 = plt.subplots(1, 1, layout="constrained", figsize=(10, 6))
 
-    # now add some labels
-    for i, txt in enumerate(data_df.index.values):
-        ax1.annotate(txt, (data_df['pr'][i], data_df['tas'][i]))
+    sns.scatterplot(data=data_df, x='pr', y='tas', ax=ax1)
 
+    labels = []
+    i = 1
+    for k, v in data_df.iterrows():
+        # labels
+        l = f'{i} - {k}'
+        labels.append(l)
+        ax1.annotate(
+            i,
+            (v['pr'], v['tas']),
+            xytext=(2.5, -2.5), textcoords='offset points',
+            fontsize=8
+        )
+        i = i+1
+
+    ax1.text(
+        1.05, 1.0, '\n'.join(labels),
+        transform=ax1.transAxes,
+        ha='left',
+        va='top'
+    )
+
+    ax1.set_title('tas and pr anomaly')
     png_name = 'scatter_plot.png'
 
-    fig = ax1.get_figure()
     fig.savefig(os.path.join(local_path, png_name))
     plt.close(fig)
 
@@ -68,9 +88,9 @@ def process_data(cfg):
             # store the data
             if var['short_name'] == 'pr':
                 # convert precip to mm/day
-                d_val = cube.data * 86400
+                d_val = cube.data.item() * 86400
             else:
-                d_val = cube.data
+                d_val = cube.data.item()
             data[key][var['short_name']] = d_val
             
     data_df = pd.DataFrame(data).transpose()

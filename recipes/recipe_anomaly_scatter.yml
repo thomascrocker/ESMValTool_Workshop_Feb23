@@ -88,7 +88,7 @@ base_var: &base_var
   mip: Amon
   exp: [historical, ssp585]
   start_year: 1990
-  end_year: 2100
+  end_year: 2099
   preprocessor: anomalies_proc
 
 
