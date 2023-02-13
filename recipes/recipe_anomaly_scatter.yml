@@ -13,7 +13,10 @@ datasets:
 
 
 preprocessors:
-  tas_anomalies:
+  anomalies_proc:
+    extract_season: 
+      season: JJA
+
     extract_region:
       start_longitude: 100
       end_longitude: 120
@@ -21,28 +24,40 @@ preprocessors:
       end_latitude: 25
     area_statistics:
       operator: mean
-      
+    
+
     anomalies:
-        period: season
-        reference:
-          start_year: 1991
-          start_month: 1
-          start_day: 1
-          end_year: 2010
-          end_month: 12
-          end_day: 31
-        standardize: false
+      period: full
+      reference:
+        start_year: 1991
+        start_month: 1
+        start_day: 1
+        end_year: 2010
+        end_month: 12
+        end_day: 31
+      standardize: false
+
+
+base_var: &base_var
+  activity: [CMIP, ScenarioMIP]
+  mip: Amon
+  exp: [historical, ssp585]
+  start_year: 1990
+  end_year: 2100
+  preprocessor: anomalies_proc
 
 
 diagnostics:
   anomalies:
     variables:
       tas:
+        <<: *base_var
         short_name: tas
-        activity: [CMIP, ScenarioMIP]
-        mip: Amon
-        exp: [historical, ssp585]
-        preprocessor: tas_anomalies
-        start_year: 1991
-        end_year: 2100
-    scripts: null
+      pr:
+        <<: *base_var
+        short_name: pr
+    scripts:
+      scatter:
+        script: /home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/diagnostics/anomaly_scatter.py
+        period_start: 2070
+        period_end: 2099
