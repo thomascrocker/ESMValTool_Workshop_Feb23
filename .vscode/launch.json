@@ -11,7 +11,10 @@
             "program": "/home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/diagnostics/anomaly_scatter.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["/home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/esmvaltool_output/recipe_anomaly_scatter_20230213_104722/run/anomalies/scatter/settings.yml"],
+            "args": [
+                "/home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/esmvaltool_output/recipe_anomaly_scatter_20230213_120306/run/anomalies/scatter/settings.yml",
+                "-f"
+            ],
             "env": {"MPLBACKEND": "Agg"}
         }
     ]
