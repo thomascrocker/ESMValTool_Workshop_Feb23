@@ -70,7 +70,6 @@ preprocessors:
     area_statistics:
       operator: mean
     
-
     anomalies:
       period: full
       reference:
