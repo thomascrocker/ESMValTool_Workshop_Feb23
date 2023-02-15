@@ -78,14 +78,15 @@ def process_data(cfg):
     # dataframe, arranged by model name / variable
 
     # first group the data by dataset / model name
-    my_files_dict = group_metadata(cfg['input_data'].values(), 'dataset')
+    datasets = group_metadata(cfg['input_data'].values(), 'dataset')
 
     logger.info('Processing data')
     data = {}
     # for each model...
-    for key, value in my_files_dict.items():
+    for key, value in datasets.items():
         data[key] = {}
-        # for each variable (tas, pr)
+        # there are two entries per dataset
+        # one for each variable (tas, pr)
         for var in value:
             # load the data
             cube = iris.load_cube(var['filename'])

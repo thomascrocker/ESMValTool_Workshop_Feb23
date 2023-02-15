@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "/home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/esmvaltool_output/recipe_anomaly_scatter_20230213_140745/run/anomalies/scatter/settings.yml",
+                "/home/h02/tcrocker/code/ESMValTool_Workshop_Feb23/esmvaltool_output/recipe_anomaly_scatter_20230215_155032/run/anomalies/scatter/settings.yml",
                 "-i"
             ],
             "env": {"MPLBACKEND": "Agg"}
