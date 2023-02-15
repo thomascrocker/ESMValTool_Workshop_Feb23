@@ -18,7 +18,15 @@ from esmvaltool.diag_scripts.shared import group_metadata, run_diagnostic
 logger = logging.getLogger(os.path.basename(__file__))
 
 
-def _plot_scatter(cfg, data_df):
+def plot_scatter(cfg, data_df):
+    """
+    Create scatter plot
+
+    Arguments:
+        cfg - nested dictionary of metadata
+        data_df - Pandas dataframe of data for plotting
+
+    """
     logger.info('Making the plot')
     # get path to output plot folder
     local_path = cfg['plot_dir']
@@ -63,7 +71,7 @@ def process_data(cfg):
         cfg - nested dictionary of metadata
 
     Returns:
-        string; runs the user diagnostic
+        data_df; Pandas dataframe of processed data
 
     """
     # we want to read the data from the cfg files, and put values into a
@@ -102,12 +110,13 @@ def process_data(cfg):
     # convert to dataframe
     data_df = pd.DataFrame(data).transpose()
 
-    # now make the plot
-    _plot_scatter(cfg, data_df)
+    return data_df
 
 
 if __name__ == '__main__':
     # always use run_diagnostic() to get the config (the preprocessor
     # nested dictionary holding all the needed information)
     with run_diagnostic() as config:
-        process_data(config)
+        data_df = process_data(config)
+        # now make the plot
+        plot_scatter(config, data_df)
